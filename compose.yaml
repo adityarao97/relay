@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=relay'
+      - 'MYSQL_PASSWORD=cm9vdA=='
+      - 'MYSQL_ROOT_PASSWORD=cm9vdA=='
+      - 'MYSQL_USER=aditya'
+    ports:
+      - '3306'
+  sqlserver:
+    image: 'mcr.microsoft.com/mssql/server:latest'
+    environment:
+      - 'ACCEPT_EULA=yes'
+      - 'MSSQL_PID=express'
+      - 'MSSQL_SA_PASSWORD=cm9vdA=='
+    ports:
+      - '1433'

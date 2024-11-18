@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  zookeeper:
+    image: zookeeper:3.7
+    ports:
+      - "${ZOOKEEPER_PORT:-2181}:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "${KAFKA_PORT:-9092}:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:${ZOOKEEPER_PORT:-2181}"
+
+      KAFKA_LISTENERS: PLAINTEXT://${KAFKA_LISTENERS_HOST:-0.0.0.0}:${KAFKA_PORT:-9092}
+      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_ADVERTISED_LISTENERS_HOST:-localhost}:${KAFKA_PORT:-9092}
+      KAFKA_ADVERTISED_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+
+      KAFKA_LISTENER_NAME_INTERNAL: PLAINTEXT
+      KAFKA_LISTENER_INTERNAL_PORT: "${KAFKA_PORT:-9092}"
+
+    depends_on:
+      - zookeeper
